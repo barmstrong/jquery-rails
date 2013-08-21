@@ -187,6 +187,7 @@
         element.data('ujs:enable-with', element[method]());
         element[method](element.data('disable-with'));
         element.prop('disabled', true);
+        element.addClass('disabled');
       });
     },
 
@@ -199,6 +200,7 @@
         var element = $(this), method = element.is('button') ? 'html' : 'val';
         if (element.data('ujs:enable-with')) element[method](element.data('ujs:enable-with'));
         element.prop('disabled', false);
+        element.removeClass('disabled');
       });
     },
 
