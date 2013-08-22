@@ -186,7 +186,7 @@
         var element = $(this), method = element.is('button') ? 'html' : 'val';
         element.data('ujs:enable-with', element[method]());
         element[method](element.data('disable-with'));
-        element.attr('disabled', 'disabled');
+        element.prop('disabled', true);
       });
     },
 
@@ -198,7 +198,7 @@
       form.find(rails.enableSelector).each(function() {
         var element = $(this), method = element.is('button') ? 'html' : 'val';
         if (element.data('ujs:enable-with')) element[method](element.data('ujs:enable-with'));
-        element.attr('disabled', false);
+        element.prop('disabled', false);
       });
     },
 
@@ -264,6 +264,7 @@
     disableElement: function(element) {
       element.data('ujs:enable-with', element.html()); // store enabled state
       element.html(element.data('disable-with')); // set to disabled state
+      element.addClass('disabled');
       element.bind('click.railsDisable', function(e) { // prevent further clicking
         return rails.stopEverything(e);
       });
@@ -273,6 +274,7 @@
     enableElement: function(element) {
       if (element.data('ujs:enable-with') !== undefined) {
         element.html(element.data('ujs:enable-with')); // set to old enabled state
+        element.removeClass('disabled');
         element.removeData('ujs:enable-with'); // clean up cache
       }
       element.unbind('click.railsDisable'); // enable element
